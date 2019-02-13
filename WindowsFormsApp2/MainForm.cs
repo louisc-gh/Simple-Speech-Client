@@ -13,10 +13,10 @@ using Grpc.Auth;
 using System.IO;
 using System.Threading;
 
-namespace WindowsFormsApp2
+namespace SimpleSpeechClient
 {
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
 
         private ISimpleSpeechRecognizer rec = null;
@@ -24,7 +24,7 @@ namespace WindowsFormsApp2
         /// <summary>
         /// 
         /// </summary>
-        public Form1()
+        public MainForm()
         {
             // this is a new comment
             InitializeComponent();

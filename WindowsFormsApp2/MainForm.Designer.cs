@@ -1,6 +1,6 @@
-﻿namespace WindowsFormsApp2
+﻿namespace SimpleSpeechClient
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -65,7 +65,7 @@
             this.stopRecognitionButton.UseVisualStyleBackColor = true;
             this.stopRecognitionButton.Click += new System.EventHandler(this.stopRecognitionButton_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -73,7 +73,7 @@
             this.Controls.Add(this.stopRecognitionButton);
             this.Controls.Add(this.transcriptTextControl);
             this.Controls.Add(this.startRecognitionButton);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Simple Recognizer";
             this.ResumeLayout(false);
             this.PerformLayout();

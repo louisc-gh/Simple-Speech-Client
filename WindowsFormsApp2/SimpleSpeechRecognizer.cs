@@ -14,7 +14,7 @@ using System.IO;
 using System.Threading;
 using NAudio.Wave;
 
-namespace WindowsFormsApp2
+namespace SimpleSpeechClient
 {
     interface ISimpleSpeechRecognizer
     {
