@@ -26,6 +26,7 @@ namespace WindowsFormsApp2
         /// </summary>
         public Form1()
         {
+            // this is a new comment
             InitializeComponent();
         }
 
