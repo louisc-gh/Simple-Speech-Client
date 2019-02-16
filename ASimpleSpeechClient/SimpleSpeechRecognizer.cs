@@ -65,6 +65,11 @@ namespace SimpleSpeechClient
         private SpeechClient speechClient = null;
 
         /// <summary>
+        /// request
+        /// </summary>
+        private StreamingRecognizeRequest request = null;
+
+        /// <summary>
         /// 
         /// </summary>
         public event EventHandler<TranscriptAvailableEventArgs> TranscriptAvailable;
@@ -108,21 +113,23 @@ namespace SimpleSpeechClient
 
             streamingCall = speechClient.StreamingRecognize();
 
-            // Write the initial request with the config.
-            await streamingCall.WriteAsync(
-                new StreamingRecognizeRequest()
+            request = new StreamingRecognizeRequest()
+            {
+                StreamingConfig = new StreamingRecognitionConfig()
                 {
-                    StreamingConfig = new StreamingRecognitionConfig()
+                    Config = new RecognitionConfig()
                     {
-                        Config = new RecognitionConfig()
-                        {
-                            Encoding = encoding,
-                            SampleRateHertz = sampleRateHertz,
-                            LanguageCode = languageCode,
-                        },
-                        InterimResults = intermResults,
-                    }
-                });
+                        Encoding = encoding,
+                        SampleRateHertz = sampleRateHertz,
+                        LanguageCode = languageCode,
+                    },
+
+                    InterimResults = intermResults,
+                }
+            };
+
+            // Write the initial request with the config.
+            await streamingCall.WriteAsync(request);
         }
 
         /// <summary>
