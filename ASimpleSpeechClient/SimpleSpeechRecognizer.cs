@@ -173,7 +173,6 @@ namespace SimpleSpeechClient
                     do
                     {
                         var currentTime = DateTime.Now;
-
                         TimeSpan interval = currentTime - startTicks;
 
                         if (interval.TotalSeconds >= 55)
@@ -183,18 +182,16 @@ namespace SimpleSpeechClient
                                 streamingCall.WriteCompleteAsync();
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                                 ConfigureSpeechRequest(RecognitionConfig.Types.AudioEncoding.Linear16, 16000, "en", false);
+                                ProcessResponses();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                             }
 
                             startTicks = DateTime.Now; 
                         }
-
-
                     }
                     while (true);
                 }
             );
-
 
             return;
         }

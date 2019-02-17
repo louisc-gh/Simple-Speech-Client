@@ -82,6 +82,12 @@ namespace SimpleSpeechClient
         /// <param name="e"></param>
         public void OnTranscriptAvaible(object sender, TranscriptAvailableEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action<object, TranscriptAvailableEventArgs>(OnTranscriptAvaible), sender, e);
+                return;
+            }
+
             transcriptTextControl.Text += e.Transcript;
             transcriptTextControl.Text += ". ";
         }
