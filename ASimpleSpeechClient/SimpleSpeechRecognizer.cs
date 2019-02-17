@@ -21,7 +21,7 @@ namespace SimpleSpeechClient
         int StartSpeechClient();
         Task ConfigureSpeechRequest(RecognitionConfig.Types.AudioEncoding encoding, int sampleRateHertz, string languageCode, bool interimResults);
         int ConfigureAudioDevice(int deviceNumber, int waveFormatSampleRate, int numChannels);
-        bool BeginSpeechRecognition();
+        Task BeginSpeechRecognition();
         Task StopSpeechRecognition();
         void OnDataAvailable(object sender, NAudio.Wave.WaveInEventArgs args);
         Task ProcessResponses();
@@ -159,13 +159,44 @@ namespace SimpleSpeechClient
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool BeginSpeechRecognition()
+        public async Task BeginSpeechRecognition()
         {
             if (null == waveIn)
-                return false;
+                return;
 
             waveIn.StartRecording();
-            return true;
+
+            await Task.Run(() =>
+                {
+                    var startTicks = DateTime.Now;
+
+                    do
+                    {
+                        var currentTime = DateTime.Now;
+
+                        TimeSpan interval = currentTime - startTicks;
+
+                        if (interval.TotalSeconds >= 55)
+                        {
+                            lock (writeLock)
+                            {
+                                streamingCall.WriteCompleteAsync();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                                ConfigureSpeechRequest(RecognitionConfig.Types.AudioEncoding.Linear16, 16000, "en", false);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                            }
+
+                            startTicks = DateTime.Now; 
+                        }
+
+
+                    }
+                    while (true);
+                }
+            );
+
+
+            return;
         }
 
         /// <summary>
